@@ -4,22 +4,33 @@ class PartyMeta extends LauncherPartyMeta {
 
   constructor(party, meta) {
     super(party);
-
+    
     this.schema = {
-      PrimaryGameSessionId_s: '',
-      PartyState_s: 'BattleRoyaleView',
+      AllowJoinInProgress_b: 'false',
+      AthenaSquadFill_b: 'true',
+      CustomMatchKey_s: '',
+      GameSessionKey_s: '',
+      LFGTime_s: '0001-01-01T00:00:00.000Z',
       LobbyConnectionStarted_b: 'false',
+      MatchmakingInfoString_s: '',
       MatchmakingResult_s: 'NoResults',
       MatchmakingState_s: 'NotMatchmaking',
-      SessionIsCriticalMission_b: 'false',
-      ZoneTileIndex_U: '-1',
-      ZoneInstanceId_s: '',
-      TheaterId_s: '',
-      TileStates_j: JSON.stringify({
-        TileStates: [],
+      PartyIsJoinedInProgress_b: 'false',
+      PartyMatchmakingInfo_j: JSON.stringify({
+        PartyMatchmakingInfo: {
+          buildId: -1,
+          hotfixVersion: -1,
+          regionId: "",
+          playlistName :"None",
+          tournamentId: "",
+          eventWindowId: "",
+          linkCode: "",
+        },
       }),
-      MatchmakingInfoString_s: '',
-      CustomMatchKey_s: '',
+      PartyState_s: 'BattleRoyaleView',
+      PlatformSessions_j: JSON.stringify({
+        PlatformSessions: [],
+      }),
       PlaylistData_j: JSON.stringify({
         PlaylistData: {
           playlistName: 'Playlist_DefaultSolo',
@@ -28,12 +39,7 @@ class PartyMeta extends LauncherPartyMeta {
           regionId: 'EU',
         },
       }),
-      AthenaSquadFill_b: 'true',
-      AllowJoinInProgress_b: 'false',
-      LFGTime_s: '0001-01-01T00:00:00.000Z',
-      PartyIsJoinedInProgress_b: 'false',
-      GameSessionKey_s: '',
-      RawSquadAssignments_j: '',
+      PrimaryGameSessionId_s: '',
       PrivacySettings_j: JSON.stringify({
         PrivacySettings: {
           partyType: this.party.config.privacy.partyType,
@@ -41,9 +47,21 @@ class PartyMeta extends LauncherPartyMeta {
           bOnlyLeaderFriendsCanJoin: this.party.config.privacy.onlyLeaderFriendsCanJoin,
         },
       }),
-      PlatformSessions_j: JSON.stringify({
-        PlatformSessions: [],
+      RawSquadAssignments_j: '',
+      SessionIsCriticalMission_b: 'false',
+      TheaterId_s: '',
+      TileStates_j: JSON.stringify({
+        TileStates: [],
       }),
+      ["urn:epic:cfg:accepting-members_b"]: "true",
+      ["urn:epic:cfg:build-id_s"]: "",
+      ["urn:epic:cfg:chat-enabled_b"]: "true",
+      ["urn:epic:cfg:invite-perm_s"]: "Anyone",
+      ["urn:epic:cfg:join-request-action_s"]: "Auto",
+      ["urn:epic:cfg:party-type-id_s"]: "default",
+      ["urn:epic:cfg:presence-perm_s"]: "Anyone",
+      ZoneInstanceId_s: '',
+      ZoneTileIndex_U: '-1',
     };
 
     if (meta) this.update(meta, true);

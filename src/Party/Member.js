@@ -48,9 +48,18 @@ class Member extends LauncherMember {
     });
   }
 
+  async setContrail(asset) {
+    await this.meta.setContrail({
+      contrailDef: 'None',
+    });
+    await this.meta.setContrail({
+      contrailDef: `/Game/Athena/Items/Cosmetics/Contrails/${asset}.${asset}`, /* Thanks to benbot, i have the path */
+    });
+  }
+
   async clearEmote() {
     this.checkPermissions();
-    // Not needed anymore.
+    /* Not needed anymore. */
     await this.meta.setEmote({
       emoteItemDef: 'None',
     });
@@ -98,32 +107,10 @@ class Member extends LauncherMember {
    * ]
    */
 
-  async setVariant(asset, variant) {
-
-    if(asset.startsWith("CID") || asset.startsWith("cid")) {
+  async setVariant(variant) {
      await this.meta.setCosmeticLoadout({
-       characterDef: `/Game/Athena/Items/Cosmetics/Characters/${asset}.${asset}`,
-       characterEKey: '',
        variants: variant || '',
      });
-   }
-
-   if(asset.startsWith("BID") || asset.startsWith("bid") ) {
-     await this.meta.setCosmeticLoadout({
-       backpackDef: `/Game/Athena/Items/Cosmetics/Backpacks/${asset}.${asset}`,
-       backpackEKey: '',
-       variants: variant || '',
-     });
-   }
-
-   if(asset.startsWith("Pickaxe_ID_") || asset.startsWith("pickaxe_id_") ) {
-     await this.meta.setCosmeticLoadout({
-       pickaxeDef: `/Game/Athena/Items/Cosmetics/Pickaxes/${asset}.${asset}`,
-       pickaxeEKey: '',
-       variants: variant || '',
-     });
-   }
-
   }
 
  async setOutfit(asset) {

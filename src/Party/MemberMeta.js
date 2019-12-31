@@ -18,44 +18,19 @@ class MemberMeta extends LauncherMemberMeta {
     ];
 
     const character = defaultCharacters[Math.floor(Math.random() * defaultCharacters.length)];
-    
+
     this.schema = {
-      Location_s: 'PreLobby',
-      CampaignHero_j: JSON.stringify({
-        CampaignHero: {
-          heroItemInstanceId: '',
-          heroType: `FortHeroType'/Game/Athena/Heroes/${character}.${character}'`,
-        },
-      }),
-      MatchmakingLevel_U: '0',
-      ZoneInstanceId_s: '',
-      HomeBaseVersion_U: '1',
-      HasPreloadedAthena_b: false,
-      FrontendEmote_j: JSON.stringify({
-        FrontendEmote: {
-          emoteItemDef: 'None',
-          emoteItemDefEncryptionKey: '',
-          emoteSection: 1,
-        },
-      }),
-      NumAthenaPlayersLeft_U: '0',
-      UtcTimeStartedMatchAthena_s: '0001-01-01T00:00:00.000Z',
-      GameReadiness_s: 'SittingOut',
-      HiddenMatchmakingDelayMax_U: '0',
-      ReadyInputType_s: 'Count',
-      CurrentInputType_s: 'MouseAndKeyboard',
       AssistedChallengeInfo_j: JSON.stringify({
         AssistedChallengeInfo: {
           questItemDef: 'None',
           objectivesCompleted: 0,
         },
       }),
-      MemberSquadAssignmentRequest_j: JSON.stringify({
-        MemberSquadAssignmentRequest: {
-          startingAbsoluteIdx: -1,
-          targetAbsoluteIdx: -1,
-          swapTargetMemberId: 'INVALID',
-          version: 0,
+      AthenaBannerInfo_j: JSON.stringify({
+        AthenaBannerInfo: {
+          bannerIconId: 'standardbanner15',
+          bannerColorId: 'defaultcolor15',
+          seasonLevel: 1,
         },
       }),
       AthenaCosmeticLoadout_j: JSON.stringify({
@@ -66,14 +41,10 @@ class MemberMeta extends LauncherMemberMeta {
           backpackEKey: '',
           pickaxeDef: 'AthenaPickaxeItemDefinition\'/Game/Athena/Items/Cosmetics/Pickaxes/DefaultPickaxe.DefaultPickaxe\'',
           pickaxeEKey: '',
+          contrailDef: "None",
+          contrailEKey: "",
+          scratchpad: [],
           variants: [],
-        },
-      }),
-      AthenaBannerInfo_j: JSON.stringify({
-        AthenaBannerInfo: {
-          bannerIconId: 'standardbanner15',
-          bannerColorId: 'defaultcolor15',
-          seasonLevel: 1,
         },
       }),
       BattlePassInfo_j: JSON.stringify({
@@ -84,16 +55,51 @@ class MemberMeta extends LauncherMemberMeta {
           friendBoostXp: 0,
         },
       }),
+      CampaignHero_j: JSON.stringify({
+        CampaignHero: {
+          heroItemInstanceId: '',
+          heroType: `FortHeroType'/Game/Athena/Heroes/${character}.${character}'`,
+        },
+      }),
+      CrossplayPreference_s: 'OptedIn',
+      CurrentInputType_s: 'MouseAndKeyboard',
+      FeatDefinition_s: "None",
+      FrontendEmote_j: JSON.stringify({
+        FrontendEmote: {
+          emoteItemDef: 'None',
+          emoteEKey: '',
+          emoteSection: 1,
+        },
+      }),
+      GameReadiness_s: 'SittingOut',
+      HasPreloadedAthena_b: false,
+      HiddenMatchmakingDelayMax_U: '0',
+      HomeBaseVersion_U: '1',
+      Location_s: 'PreLobby',
+      MatchmakingLevel_U: '0',
+      MemberSquadAssignmentRequest_j: JSON.stringify({
+        MemberSquadAssignmentRequest: {
+          startingAbsoluteIdx: -1,
+          targetAbsoluteIdx: -1,
+          swapTargetMemberId: 'INVALID',
+          version: 0,
+        },
+      }),
+      NumAthenaPlayersLeft_U: "0",
       Platform_j: JSON.stringify({
         Platform: {
           platformStr: this.app.config.platform.short,
         },
       }),
-      PlatformUniqueId_s: 'INVALID',
       PlatformSessionId_s: '',
-      CrossplayPreference_s: 'OptedIn',
-      VoiceChatEnabled_b: 'true',
-      VoiceConnectionId_s: '',
+      PlatformUniqueId_s: 'INVALID',
+      ReadyInputType_s: 'Count',
+      ["urn:epic:member:dn_s"]: this.app.launcher.account.displayName,
+      ["urn:epic:member:voicechatmuted_b"]: "false",
+      SpectateAPartyMemberAvailable_b: "false",
+      UtcTimeStartedMatchAthena_s: '0001-01-01T00:00:00.000Z',
+      VoiceChatStatus_s:"Disabled",
+      ZoneInstanceId_s: '',
     };
 
     if (meta) this.update(meta, true);
@@ -157,8 +163,8 @@ class MemberMeta extends LauncherMemberMeta {
   }
 
   async setEmote(data) {
-    let loadout = this.get('FrontendEmote_j');
-    loadout = this.set('FrontendEmote_j', {
+    let loadout = this.get('AthenaCosmeticLoadout_j');
+    loadout = this.set('AthenaCosmeticLoadout_j', {
       ...loadout,
       FrontendEmote: {
         ...loadout.FrontendEmote,
@@ -167,6 +173,20 @@ class MemberMeta extends LauncherMemberMeta {
     });
     await this.member.patch({
       FrontendEmote_j: loadout,
+    });
+  }
+
+  async setContrail(data) {
+    let loadout = this.get('AthenaCosmeticLoadout_j');
+    loadout = this.set('AthenaCosmeticLoadout_j', {
+      ...loadout,
+      AthenaCosmeticLoadout: {
+        ...loadout.AthenaCosmeticLoadout,
+        ...data,
+      },
+    });
+    await this.member.patch({
+      contrailDef: loadout,
     });
   }
 
