@@ -37,9 +37,9 @@ class App extends Application {
     this.id = 'Fortnite';
 
     this.config = {
-      build: '++Fortnite+Release-10.31-CL-8723043', // named "Build" in official client logs
-      engineBuild: '4.23.0-8723043+++Fortnite+Release-10.31', // named "Engine Version" in official client logs
-      netCL: '', // named "Net CL" in official client logs
+      build: '++Fortnite+Release-10.31-CL-8723043',
+      engineBuild: '4.23.0-8723043+++Fortnite+Release-10.31',
+      netCL: '', /* Parties don't need it. */
       partyBuildId: '1:1:',
       ...this.config,
     };
@@ -141,17 +141,19 @@ class App extends Application {
 
           this.party = null;
 
-          if (this.communicator && this.config.createPartyOnStart) { // TODO - move it to subGame
+          if (this.communicator && this.config.createPartyOnStart) { /* TODO - move it to subGame */
             const partyStatus = await this.Party.lookupUser(this, this.launcher.account.id);
-            // if (partyStatus.current.length > 0) {
-            //   this.party = new this.Party(this, partyStatus.current[0]);
-            //   await this.party.patch();
-            //   this.party.updatePresence();
-            //   this.launcher.debug.print(`Fortnite: You has joined to previous party#${this.party.id}.`);
-            // } else {
-            //   this.party = await this.Party.create(this);
-            //   this.launcher.debug.print(`Fortnite: Party#${this.party.id} has been created.`);
-            // }
+            /*
+             if (partyStatus.current.length > 0) {
+               this.party = new this.Party(this, partyStatus.current[0]);
+               await this.party.patch();
+               this.party.updatePresence();
+               this.launcher.debug.print(`Fortnite: You has joined to previous party#${this.party.id}.`);
+             } else {
+               this.party = await this.Party.create(this);
+               this.launcher.debug.print(`Fortnite: Party#${this.party.id} has been created.`);
+             }
+             */
 
             if (partyStatus.current.length > 0) {
               this.party = new this.Party(this, partyStatus.current[0]);
@@ -445,7 +447,7 @@ class App extends Application {
       lootResult: purchase.lootResult.map(item => new Item(this, {
         id: item.itemGuid,
         templateId: item.itemType,
-        // itemProfile: item.itemProfile,
+        /* itemProfile: item.itemProfile, */
         quantity: item.quantity,
       })),
     }));

@@ -41,9 +41,6 @@ class MemberMeta extends LauncherMemberMeta {
           backpackEKey: '',
           pickaxeDef: 'AthenaPickaxeItemDefinition\'/Game/Athena/Items/Cosmetics/Pickaxes/DefaultPickaxe.DefaultPickaxe\'',
           pickaxeEKey: '',
-          contrailDef: "None",
-          contrailEKey: "",
-          scratchpad: [],
           variants: [],
         },
       }),
@@ -63,11 +60,10 @@ class MemberMeta extends LauncherMemberMeta {
       }),
       CrossplayPreference_s: 'OptedIn',
       CurrentInputType_s: 'MouseAndKeyboard',
-      FeatDefinition_s: "None",
       FrontendEmote_j: JSON.stringify({
         FrontendEmote: {
           emoteItemDef: 'None',
-          emoteEKey: '',
+          emoteItemDefEncryptionKey: '',
           emoteSection: 1,
         },
       }),
@@ -85,7 +81,7 @@ class MemberMeta extends LauncherMemberMeta {
           version: 0,
         },
       }),
-      NumAthenaPlayersLeft_U: "0",
+      NumAthenaPlayersLeft_U: '0',
       Platform_j: JSON.stringify({
         Platform: {
           platformStr: this.app.config.platform.short,
@@ -94,11 +90,9 @@ class MemberMeta extends LauncherMemberMeta {
       PlatformSessionId_s: '',
       PlatformUniqueId_s: 'INVALID',
       ReadyInputType_s: 'Count',
-      ["urn:epic:member:dn_s"]: this.app.launcher.account.displayName,
-      ["urn:epic:member:voicechatmuted_b"]: "false",
-      SpectateAPartyMemberAvailable_b: "false",
       UtcTimeStartedMatchAthena_s: '0001-01-01T00:00:00.000Z',
-      VoiceChatStatus_s:"Disabled",
+      VoiceChatEnabled_b: 'true',
+      VoiceConnectionId_s: '',
       ZoneInstanceId_s: '',
     };
 

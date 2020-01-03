@@ -73,7 +73,7 @@ class Matchmaking extends Events {
     try {
       
       const { data } = await this.http.sendGet(
-        // eslint-disable-next-line max-len
+        /* eslint-disable-next-line max-len */
         `${ENDPOINT.MATCHMAKING_TICKET.replace('{{account_id}}', this.account.id)}?partyPlayerIds=${this.account.id}&bucketId=4620426%3A0%3AEU%3Aplaylist_defaultsolo&player.platform=Windows&player.subregions=DE%2CFR%2CGB&player.option.crossplayOptOut=false&party.WIN=true&input.KBM=true`,
         `${this.app.auth.tokenType} ${this.app.auth.accessToken}`,
       );

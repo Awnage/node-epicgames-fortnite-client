@@ -64,7 +64,7 @@ class Http {
           switch (body.errorCode) {
 
             default:
-              // eslint-disable-next-line no-console
+              /* eslint-disable-next-line no-console */
               if (body.errorCode === 'errors.com.epicgames.social.party.member_not_found') break;
               reject(new Error(body.errorCode));
               break;

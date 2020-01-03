@@ -35,7 +35,7 @@ class CreativeSubGame extends SubGame {
     try {
             
       let { data } = await this.fn.http.sendGet(
-        `${ENDPOINT.CREATIVE_FAVORITES}/${this.launcher.account.id}?limit=30`, // TODO: Add pagination
+        `${ENDPOINT.CREATIVE_FAVORITES}/${this.launcher.account.id}?limit=30`, /* TODO: Add pagination */
         `${this.fn.auth.tokenType} ${this.fn.auth.accessToken}`,
       );
 

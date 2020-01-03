@@ -6,6 +6,7 @@ class PartyMeta extends LauncherPartyMeta {
     super(party);
     
     this.schema = {
+      /* Fixed schema a little, from Kekistanz */
       AllowJoinInProgress_b: 'false',
       AthenaSquadFill_b: 'true',
       CustomMatchKey_s: '',
@@ -16,17 +17,6 @@ class PartyMeta extends LauncherPartyMeta {
       MatchmakingResult_s: 'NoResults',
       MatchmakingState_s: 'NotMatchmaking',
       PartyIsJoinedInProgress_b: 'false',
-      PartyMatchmakingInfo_j: JSON.stringify({
-        PartyMatchmakingInfo: {
-          buildId: -1,
-          hotfixVersion: -1,
-          regionId: "",
-          playlistName :"None",
-          tournamentId: "",
-          eventWindowId: "",
-          linkCode: "",
-        },
-      }),
       PartyState_s: 'BattleRoyaleView',
       PlatformSessions_j: JSON.stringify({
         PlatformSessions: [],
@@ -48,16 +38,29 @@ class PartyMeta extends LauncherPartyMeta {
         },
       }),
       RawSquadAssignments_j: '',
+     /*
+      PartyMatchmakingInfo_j: JSON.stringify({
+        PartyMatchmakingInfo: {
+          buildId: -1,
+          hotfixVersion: -1,
+          regionId: "",
+          playlistName :"None",
+          tournamentId: "",
+          eventWindowId: "",
+          linkCode: "",
+        },
+      }),
+      */
       SessionIsCriticalMission_b: 'false',
       TheaterId_s: '',
       TileStates_j: JSON.stringify({
         TileStates: [],
       }),
       ["urn:epic:cfg:accepting-members_b"]: "true",
-      ["urn:epic:cfg:build-id_s"]: "",
+      ["urn:epic:cfg:build-id_s"]: "1:1:",
       ["urn:epic:cfg:chat-enabled_b"]: "true",
       ["urn:epic:cfg:invite-perm_s"]: "Anyone",
-      ["urn:epic:cfg:join-request-action_s"]: "Auto",
+      ["urn:epic:cfg:join-request-action_s"]: "Manual",
       ["urn:epic:cfg:party-type-id_s"]: "default",
       ["urn:epic:cfg:presence-perm_s"]: "Anyone",
       ZoneInstanceId_s: '',

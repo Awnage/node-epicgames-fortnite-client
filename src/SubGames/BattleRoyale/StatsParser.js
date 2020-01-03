@@ -23,7 +23,7 @@ class StatsParser {
         
         const name = parts[2];
         const platform = this.readInputType(parts[3]);
-        // const m = parts[4]; // I don't know, what is this. It seems, that everytime is `m0`
+        /* const m = parts[4]; - I don't know, what is this. It seems, that everytime is `m0` */
         let mode = parts[5];
 
         switch (mode) {

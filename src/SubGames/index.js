@@ -8,7 +8,7 @@ class SubGame {
   }
 
   async init() {
-    // default init
+    /* default init */
   }
 
 }
