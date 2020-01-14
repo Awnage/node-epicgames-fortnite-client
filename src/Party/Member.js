@@ -134,6 +134,11 @@ class Member extends LauncherMember {
    });
  }
 
+ async setScratchPad(pad) {
+  await this.meta.setCosmeticLoadout({
+    scratchpad: pad, /* yup added this just in case for new skins that use this */
+  });
+ }
 
 }
 

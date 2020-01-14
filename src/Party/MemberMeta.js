@@ -41,6 +41,9 @@ class MemberMeta extends LauncherMemberMeta {
           backpackEKey: '',
           pickaxeDef: 'AthenaPickaxeItemDefinition\'/Game/Athena/Items/Cosmetics/Pickaxes/DefaultPickaxe.DefaultPickaxe\'',
           pickaxeEKey: '',
+          contrailDef: "None",
+          contrailEKey: "",
+          scratchpad: [], /* now thats what i call a big leak for skins */
           variants: [],
         },
       }),
