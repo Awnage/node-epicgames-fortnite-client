@@ -67,7 +67,7 @@ class MemberMeta extends LauncherMemberMeta {
         FrontendEmote: {
           emoteItemDef: 'None',
           emoteItemDefEncryptionKey: '',
-          emoteSection: 1,
+          emoteSection: 2,
         },
       }),
       GameReadiness_s: 'SittingOut',
