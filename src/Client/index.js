@@ -93,7 +93,7 @@ class App extends Application {
     
       if (wait) {
                     
-        this.launcher.debug.print(`Problems with servers, need wait ${wait.expectedWait} seconds.`);
+        this.launcher.debug.print(`[init()] Problems with servers, need wait ${wait.expectedWait} seconds.`);
         const sto = setTimeout(() => {
           clearTimeout(sto);
           return this.init();
@@ -159,10 +159,10 @@ class App extends Application {
             if (partyStatus.current.length > 0) {
               this.party = new this.Party(this, partyStatus.current[0]);
               await this.party.leave();
-              this.launcher.debug.print(`Fortnite: You left previous party#${partyStatus.current[0].id}.`);
+              this.launcher.debug.print(`[Fortnite] You left previous party#${partyStatus.current[0].id}.`);
             }
             this.party = await this.Party.create(this);
-            this.launcher.debug.print(`Fortnite: Party#${this.party.id} has been created.`);
+            this.launcher.debug.print(`[Fortnite] Party#${this.party.id} has been created.`);
 
           }
 
@@ -186,7 +186,7 @@ class App extends Application {
 
     try {
 
-      this.launcher.debug.print(`Fortnite: ${isRefresh ? 'Exchanging refreshed access token...' : 'Exchanging access token...'}`);
+      this.launcher.debug.print(`[Fortnite] ${isRefresh ? 'Exchanging refreshed access token...' : 'Exchanging access token...'}`);
 
       const { code } = await this.launcher.account.auth.exchange();
 
@@ -216,7 +216,7 @@ class App extends Application {
           deviceId: data.device_id,
         };
 
-        this.launcher.debug.print(`Fortnite: ${isRefresh ? 'Refreshed access token exchanged!' : 'Access token exchanged!'}`);
+        this.launcher.debug.print(`[Fortnite] ${isRefresh ? 'Refreshed access token exchanged!' : 'Access token exchanged!'}`);
 
         if (!isRefresh) {
           
