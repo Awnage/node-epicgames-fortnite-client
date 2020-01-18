@@ -41,6 +41,7 @@ class App extends Application {
       engineBuild: '4.23.0-8723043+++Fortnite+Release-10.31',
       netCL: '', /* Parties don't need it. */
       partyBuildId: '1:1:',
+      defaultstate: 'SittingOut',
       ...this.config,
     };
         
