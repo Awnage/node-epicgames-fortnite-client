@@ -159,10 +159,10 @@ class App extends Application {
             if (partyStatus.current.length > 0) {
               this.party = new this.Party(this, partyStatus.current[0]);
               await this.party.leave();
-              this.launcher.debug.print(`[Fortnite] You left previous party#${partyStatus.current[0].id}.`);
+              this.launcher.debug.print(`[Fortnite] You left previous party[${partyStatus.current[0].id}].`);
             }
             this.party = await this.Party.create(this);
-            this.launcher.debug.print(`[Fortnite] Party#${this.party.id} has been created.`);
+            this.launcher.debug.print(`[Fortnite] Party[${this.party.id}] has been created.`);
 
           }
 
