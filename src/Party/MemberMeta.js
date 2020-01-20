@@ -70,7 +70,7 @@ class MemberMeta extends LauncherMemberMeta {
           emoteSection: 2,
         },
       }),
-      GameReadiness_s: this.app.config.defaultstate,
+      GameReadiness_s: 'SittingOut',
       HasPreloadedAthena_b: false,
       HiddenMatchmakingDelayMax_U: '0',
       HomeBaseVersion_U: '1',
