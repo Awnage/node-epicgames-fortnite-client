@@ -208,6 +208,52 @@ class App extends Application {
     );
     return data;
   }
+  
+      /**
+   * @param {Object} friend What friend should the note be set to
+   * @param {string} note What note
+   */
+  async setNote(friend, note) {
+    const fnd = await this.launcher.getProfile(friend);
+    const data = await this.http.send(
+      `PUT`,
+      `https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/${this.auth.accountId}/friends/${fnd.id}/note`,
+      `${this.auth.tokenType} ${this.auth.accessToken}`,
+      note,
+      false,
+      {
+        'Content-Type': "text/plain"
+      },
+      true,
+    );
+    return data;
+  }
+
+        /**
+   * @param {Object} friend What friend should the note be removed from
+   */
+  async removeNote(friend) {
+    const fnd = await this.launcher.getProfile(friend);
+    const data = await this.http.send(
+      `DELETE`,
+      `https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/${this.auth.accountId}/friends/${fnd.id}/note`,
+      `${this.auth.tokenType} ${this.auth.accessToken}`,
+    );
+    return data;
+  }
+
+          /**
+   * @param {Object} friend What friend should the nickame be removed from
+   */
+  async removeNickname(friend) {
+    const fnd = await this.launcher.getProfile(friend);
+    const data = await this.http.send(
+      `DELETE`,
+      `https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/${this.auth.accountId}/friends/${fnd.id}/alias`,
+      `${this.auth.tokenType} ${this.auth.accessToken}`,
+    );
+    return data;
+  }
 
         async getLastOnline() {
           const { data } = await this.http.sendGet(
