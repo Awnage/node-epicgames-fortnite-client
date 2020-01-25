@@ -20,6 +20,11 @@ const Items = {
   ConditionalAction: require('./Items/ConditionalAction'),
   AthenaMusicPack: require('./Items/AthenaMusicPack'),
   GiftBox: require('./Items/GiftBox'),
+  Accolades: require('./Items/Accolades'),
+  BannerToken: require('./Items/BannerToken'),
+  ChallengeBundleCompletionToken: require('./Items/ChallengeBundleCompletionToken'),
+  AthenaRewardGraph: require('./Items/AthenaRewardGraph'),
+  MedalsPunchCard: require('./Items/MedalsPunchCard')
 };
 
 class Inventory {
