@@ -180,6 +180,490 @@ class App extends Application {
 
     return false;
   }
+
+  async getSummary() {
+    const { data } = await this.http.sendGet(
+      `https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/${this.auth.accountId}/summary`,
+      `${this.auth.tokenType} ${this.auth.accessToken}`,
+    );
+    return data;
+  }
+
+    /**
+   * @param {Object} friend What friend should the alias be set to
+   * @param {string} alias What alias
+   */
+  async setAlias(friend, alias) {
+    const fnd = await this.launcher.getProfile(friend);
+    const { data } = await this.http.send(
+      `PUT`,
+      `https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/${this.auth.accountId}/friends/${fnd.id}/alias`,
+      `${this.auth.tokenType} ${this.auth.accessToken}`,
+      alias,
+      false,
+      {
+        'Content-Type': "text/plain"
+      },
+      true,
+    );
+    return data;
+  }
+
+        async getLastOnline() {
+          const { data } = await this.http.sendGet(
+            `https://presence-public-service-prod.ol.epicgames.com/presence/api/v1/_/${this.auth.accountId}/last-online`,
+            `${this.auth.tokenType} ${this.auth.accessToken}`,
+          );
+          return data;
+        }
+
+  /**
+   * @param {Object} action what to do 
+   * @param {string} info what should it do with the action
+   * @param {string} color if needed.
+   */
+  async graphql(action, info, color) {
+
+                  switch(action) {
+
+                  case 'account_graphql_get_multiple_by_user_id' || 'getMultiple': {
+                    
+                    if(!info) return;
+
+                    const { data } = await this.http.send(
+                      'POST',
+                      `https://graphql.epicgames.com/graphql`,
+                      `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                      JSON.stringify({"query":`
+                      query AccountQuery($accountIds: [String]!) {
+                        Account {
+                            accounts(accountIds: $accountIds) {
+                                id
+                                displayName
+                                externalAuths {
+                                    type
+                                    accountId
+                                    externalAuthId
+                                    externalDisplayName
+                                }
+                            }
+                        }
+                    }
+                      `,"variables":{'accountIds': info}}),
+                      false,
+                      {
+                        'Content-Type': "application/json"
+                      },
+                      true,
+                      )
+
+                      return data;
+                  }
+
+                case 'alias' || 'graphql_friends_set_alias': {
+
+                  const Friend = await this.getProfile(info);
+
+                  const { data } = await this.http.send(
+                    'POST',
+                    `https://graphql.epicgames.com/graphql`,
+                    `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                    JSON.stringify({"query":`
+                    mutation FriendsMutation($friendId: String!, $alias: String!) {
+                      Friends {
+                          setAlias(friendId: $friendId, alias: $alias) {
+                              success
+                          }
+                      }
+                    }`
+                    ,
+                  "variables": {
+                    "friendId": Friend.id,
+                      "alias": color
+                    }
+                    }),
+                    false,
+                    {
+                      'Content-Type': "application/json"
+                    },
+                    true,
+                    )
+
+                    return data
+                  }
+
+                  case 'summary': {
+
+                    const { data } = await this.http.send(
+                      'POST',
+                      `https://graphql.epicgames.com/graphql`,
+                      `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                      JSON.stringify({"query":`
+                      query FriendsQuery($displayNames: Boolean!) {
+                        Friends {
+                            summary(displayNames: $displayNames) {
+                                friends { 
+                                    alias
+                                    note 
+                                    favorite
+                                    ...friendFields
+                                }
+                                incoming { 
+                                    ...friendFields
+                                }
+                                outgoing { 
+                                    ...friendFields
+                                }
+                                blocklist { 
+                                    ...friendFields
+                                }
+                            }
+                        }
+                    }
+                    fragment friendFields on Friend {
+                        accountId 
+                        displayName 
+                        account {
+                            externalAuths { 
+                                type 
+                                accountId 
+                                externalAuthId 
+                                externalDisplayName 
+                            }
+                        }
+                    }
+                      `,"variables":{'displayNames': true}}),
+                      false,
+                      {
+                        'Content-Type': "application/json"
+                      },
+                      true,
+                      )
+
+                      return JSON.parse(data).data.Friends.summary.friends;
+                  }
+
+                  case 'PresenceV2' || 'PresenceV2Query' || 'Presence' || 'PresenceQuery': {
+                    const { data } = await this.http.send(
+                      'POST',
+                      `https://graphql.epicgames.com/graphql`,
+                      `bearer ${this.auth.accessToken}`,
+                      JSON.stringify({"query":`query PresenceV2Query($namespace: String!, $circle: String!) { PresenceV2 { getLastOnlineSummary(namespace: $namespace, circle: $circle) { summary { friendId last_online } } } }`,"variables":{ 'namespace': 'Fortnite', 'circle': 'friends' }}),
+                      false,
+                      {
+                        'Content-Type': "application/json"
+                      },
+                      true,
+                      )
+
+                      return JSON.parse(data).data.PresenceV2.getLastOnline.summary;
+                  }
+
+                  case 'initialize_friends_request' || 'initialize friends request': {
+                    
+                    const { data } = await this.http.send(
+                      'POST',
+                      `https://graphql.epicgames.com/graphql`,
+                      `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                      JSON.stringify({"query":`
+                      query FriendsQuery($displayNames: Boolean!) {
+                        Friends {
+                            summary(displayNames: $displayNames) {
+                                friends { 
+                                    alias
+                                    note 
+                                    favorite
+                                    ...friendFields
+                                }
+                                incoming { 
+                                    ...friendFields
+                                }
+                                outgoing { 
+                                    ...friendFields
+                                }
+                                blocklist { 
+                                    ...friendFields
+                                }
+                            }
+                        }
+                    }
+                    fragment friendFields on Friend {
+                        accountId 
+                        displayName 
+                        account {
+                            externalAuths { 
+                                type 
+                                accountId 
+                                externalAuthId 
+                                externalDisplayName 
+                            }
+                        }
+                    }
+                      `,"variables":{'displayNames': true}}),
+                      false,
+                      {
+                        'Content-Type': "application/json"
+                      },
+                      true,
+                      )
+
+                      const Presence = await this.http.send(
+                        'POST',
+                        `https://graphql.epicgames.com/graphql`,
+                        `bearer ${this.auth.accessToken}`,
+                        JSON.stringify({"query":`query PresenceV2Query($namespace: String!, $circle: String!) { PresenceV2 { getLastOnlineSummary(namespace: $namespace, circle: $circle) { summary { friendId last_online } } } }`,"variables":{ 'namespace': 'Fortnite', 'circle': 'friends' }}),
+                        false,
+                        {
+                          'Content-Type': "application/json"
+                        },
+                        true,
+                        )
+
+                      return Presence, JSON.parse(data).data.Friends.summary.friends
+                    }
+
+                    case 'get' || 'account_graphql_get_by_display_name': {
+
+                        const { data } = await this.http.send(
+                          'POST',
+                          `https://graphql.epicgames.com/graphql`,
+                          `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                          JSON.stringify({"query":`
+                          query AccountQuery($displayName: String!) {
+                            Account {
+                                account(displayName: $displayName) {
+                                    id
+                                    displayName
+                                    externalAuths {
+                                        type
+                                        accountId
+                                        externalAuthId
+                                        externalDisplayName
+                                    }
+                                }
+                            }
+                        }
+                          `,"variables":{'displayName': info || "Tfue"}}),
+                          false,
+                          {
+                            'Content-Type': "application/json"
+                          },
+                          true,
+                          )
+                    
+                          return data;
+                        }
+
+                        case 'external auths' || 'external_auths' || 'externalauths' || 'account_graphql_get_clients_external_auths': {
+
+                      const { data } = await this.http.send(
+                        'POST',
+                        `https://graphql.epicgames.com/graphql`,
+                        `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                        JSON.stringify({"query":`
+                        query AccountQuery {
+                          Account {
+                              myAccount { 
+                                  externalAuths {
+                                      type
+                                      accountId
+                                      externalAuthId
+                                      externalDisplayName
+                                  }
+                              }
+                          }
+                      }
+                        `}),
+                        false,
+                        {
+                          'Content-Type': "application/json"
+                        },
+                        true,
+                        )
+
+                        return data;
+                      }
+
+                      case 'icon': {
+                    try {
+                      const KairosIds = require("../../enums/Kairos Profiles");
+
+                      const KairosColors = require("../../enums/Kairos Profile Colors");
+
+                      var Color = KairosColors[color] || KairosColors["gray"];
+
+                      var IconId = KairosIds[info] || info;
+                      
+                      const { data } = await this.http.send(
+                        'GET',
+                        `${ENDPOINT.CHANNEL}/user/${this.launcher.account.id}/setting/avatar/available`,
+                      `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                      /*
+                      JSON.stringify({"query":"query GetUserSettings($key: String!) {    UserSettings {      myAvailableSetting(key: $key)}}","variables":{"key":"avatar"}}),
+                      false,
+                      {
+                        'Content-Type': "application/json"
+                      },
+                      true,
+                      */
+                      )
+
+              if(data.includes(IconId)) {
+
+              const datainfo = await this.http.send(
+              'POST',
+              `${ENDPOINT.CHANNEL}/user/setting?accountId=${this.launcher.account.id}&settingKey=avatar&settingKey=avatarBackground&settingKey=appInstalled`,
+              `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+              )
+
+              if(datainfo) {
+
+              if(datainfo.data[0].value == IconId) IconId = false
+
+              if(datainfo.data[1].value == Color) Color = false
+
+              }
+
+              if(IconId != false)
+              await this.http.send(
+              'PUT',
+              `${ENDPOINT.CHANNEL}/user/${this.launcher.account.id}/setting/avatar`,
+              `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+              JSON.stringify({ "value": IconId }),
+              false,
+              {
+              'Content-Type': "application/json"
+              },
+              true,
+              )
+
+              if(Color != false)
+              await this.http.send(
+              'PUT',
+              `${ENDPOINT.CHANNEL}/user/${this.launcher.account.id}/setting/avatarBackground`,
+              `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+              JSON.stringify({ "value": Color }),
+              false,
+              {
+                'Content-Type': "application/json"
+              },
+              true,
+              )
+
+              return true;   
+              }
+
+              else throw new Error ("You don\'t have that avatar!");
+              }
+
+              catch (err) {
+                  
+                this.debug.print(`[graphql(${action}, ${info}, ${color})] Cannot set icon.`);
+
+                this.debug.print(err);
+
+                return false;
+
+                }  
+              }
+
+              case 'profile': {
+
+              try {
+
+                const { data } = await this.http.send(
+                  'POST',
+                  `${ENDPOINT.GRAPHQL}/partyhub/graphql`,
+                  `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                  JSON.stringify({"operationName":"accountQuery","variables":{"id":null,"displayName":displayName,"email":null},"query":"query accountQuery($id: String, $displayName: String, $email: String) {\n  Account {\n    account(id: $id, displayName: $displayName, email: $email) {\n      id\n      displayName\n      friendshipStatus\n      externalAuths {\n        type\n        externalDisplayName\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"}),
+                  false,
+                  {
+                    'Content-Type': "application/json"
+                  },
+                  true,
+                  )
+                  return data;
+
+                }
+
+                catch (err) {
+                  
+                this.debug.print(`[graphql(${action}, ${info}, ${color})] Cannot accountQuery, use getProfile.`);
+
+                this.debug.print(err);
+
+                }   
+
+              }
+
+              case 'request': {
+              try {
+              const { data } = await this.http.send(
+                'POST',
+                `${ENDPOINT.GRAPHQL}/partyhub/graphql`,
+                `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                JSON.stringify(info),
+                false,
+                {
+                  'Content-Type': "application/json"
+                },
+                true,
+                );
+                return data;
+              }
+              catch (err) {
+                      
+                this.debug.print(`[graphql(${action}, ${info}, ${color})] Cannot request.`);
+
+                this.debug.print(err);
+
+                }
+
+              }
+
+              case 'friend': {
+              try {
+
+                const friend = await this.getProfile(id);
+
+                const hasFriend = await this.hasFriend(id);
+
+                if(hasFriend) throw new Error (`Already friended!`);
+
+                if(friend.id == this.launcher.account.id) throw new Error (`You cannont friend yourself!`);
+
+                const { data } = await this.http.send(
+                  'POST',
+                  `${ENDPOINT.GRAPHQL}/partyhub/graphql`,
+                  `${this.launcher.account.auth.tokenType} ${this.launcher.account.auth.accessToken}`,
+                  JSON.stringify({"operationName":"inviteFriend","variables":{"friendId":id},"query":"mutation inviteFriend($friendId: String!) {\n  Friends {\n    invite(friendToInvite: $friendId) {\n      success\n      __typename\n    }\n    __typename\n  }\n}\n"}),
+                  false,
+                  {
+                    'Content-Type': "application/json"
+                  },
+                  true,
+                  );
+                  
+                  return new Friend(this, {
+                    id: id,
+                    displayName: friend.displayName,
+                    status: 'PENDING',
+                    time: new Date(),
+                  }), data
+
+                    }
+
+                    catch (err) {
+                      
+                    this.debug.print(`[graphql(${action}, ${info}, ${color})] Cannot inviteFriend, using graphql, use inviteFriend.`);
+
+                    this.debug.print(err);
+
+                    }
+
+                }
+              }
+  }
   
   async login(isRefresh) {
 

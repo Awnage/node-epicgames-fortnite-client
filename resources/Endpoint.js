@@ -8,6 +8,10 @@ module.exports = Object.freeze({
   MCP_PROFILE: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile',
 
   CREATIVE_FAVORITES: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/creative/favorites', //  /{{account_id}}/{{world_code}}?limit=30
+  
+  CHANNEL: "https://channels-public-service-prod.ol.epicgames.com/api/v1",
+
+  GRAPHQL: "https://graphql.epicgames.com",
 
   WORLD_INFO: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/world/info',
   // XMPP wss://notifications-service-prod06.ol.epicgames.com:443.ol.epicgames.com/stomp
