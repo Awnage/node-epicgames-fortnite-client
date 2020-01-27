@@ -161,6 +161,7 @@ class App extends Application {
               this.launcher.debug.print(`[Fortnite] You left previous party[${partyStatus.current[0].id}].`);
             }
             this.party = await this.Party.create(this);
+            await this.communicator.joinRoom(`Party-${this.party.id}@muc.prod.ol.epicgames.com`);
             this.launcher.debug.print(`[Fortnite] Party[${this.party.id}] has been created.`);
 
           }
