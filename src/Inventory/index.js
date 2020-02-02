@@ -51,6 +51,10 @@ class Inventory {
       return;
     }
 
+    console.log(Item)
+
+    console.log(itemData)
+
     Item = new Item(this.app, itemData);
 
     this.items.push(Item);
