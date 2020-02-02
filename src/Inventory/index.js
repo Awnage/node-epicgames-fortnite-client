@@ -24,7 +24,8 @@ const Items = {
   BannerToken: require('./Items/BannerToken'),
   ChallengeBundleCompletionToken: require('./Items/ChallengeBundleCompletionToken'),
   AthenaRewardGraph: require('./Items/AthenaRewardGraph'),
-  MedalsPunchCard: require('./Items/MedalsPunchCard')
+  MedalsPunchCard: require('./Items/MedalsPunchCard'),
+  CosmeticVariantToken: require('./Items/CosmeticVariantToken'),
 };
 
 class Inventory {
