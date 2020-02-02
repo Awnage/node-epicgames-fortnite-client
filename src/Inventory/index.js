@@ -50,11 +50,6 @@ class Inventory {
       this.launcher.debug.print(`Unknown item: ${itemClass}`);
       return;
     }
-
-    console.log(Item)
-
-    console.log(itemData)
-
     Item = new Item(this.app, itemData);
 
     this.items.push(Item);
