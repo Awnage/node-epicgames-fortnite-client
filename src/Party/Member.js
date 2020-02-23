@@ -39,6 +39,16 @@ class Member extends LauncherMember {
     });
   }
   
+  async setShout(asset) {
+    this.checkPermissions();
+    await this.meta.setEmote({
+      emoteItemDef: 'None',
+    });
+    await this.meta.setEmote({
+      emoteItemDef: `/Game/Athena/Items/Cosmetics/Dances/Shouts/${asset}.${asset}`,
+    });
+  }
+
   async setEmoteSection(Section) {
     this.checkPermissions();
     await this.meta.setEmote({
