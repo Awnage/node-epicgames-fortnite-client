@@ -26,6 +26,7 @@ const Items = {
   AthenaRewardGraph: require('./Items/AthenaRewardGraph'),
   MedalsPunchCard: require('./Items/MedalsPunchCard'),
   CosmeticVariantToken: require('./Items/CosmeticVariantToken'),
+  CosmeticLocker: require('./Items/CosmeticLocker')
 };
 
 class Inventory {
