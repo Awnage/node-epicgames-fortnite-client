@@ -97,9 +97,9 @@ class MemberMeta extends LauncherMemberMeta {
       VoiceChatEnabled_b: 'true',
       VoiceConnectionId_s: '',
       ZoneInstanceId_s: '',
-      'SpectateAPartyMemberAvailable_b': "false",
-      'FeatDefinition_s': 'None',
-      'VoiceChatStatus_s': 'Enabled',
+      SpectateAPartyMemberAvailable_b: "false",
+      FeatDefinition_s: 'None',
+      VoiceChatStatus_s: 'Enabled',
     };
 
     if (meta) this.update(meta, true);
