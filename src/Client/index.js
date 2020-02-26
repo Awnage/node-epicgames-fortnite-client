@@ -37,8 +37,8 @@ class App extends Application {
     this.id = 'Fortnite';
 
     this.config = {
-      build: '++Fortnite+Release-10.31-CL-8723043',
-      engineBuild: '4.23.0-8723043+++Fortnite+Release-10.31',
+      build: '++Fortnite+Release-12.00-CL-11586896',
+      engineBuild: '4.23.0-8723043+++Fortnite+Release-12.00',
       netCL: '', /* Parties don't need it. */
       partyBuildId: '1:1:',
       ...this.config,

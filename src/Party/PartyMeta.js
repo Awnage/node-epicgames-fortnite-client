@@ -38,7 +38,6 @@ class PartyMeta extends LauncherPartyMeta {
         },
       }),
       RawSquadAssignments_j: '',
-     /*
       PartyMatchmakingInfo_j: JSON.stringify({
         PartyMatchmakingInfo: {
           buildId: -1,
@@ -50,12 +49,14 @@ class PartyMeta extends LauncherPartyMeta {
           linkCode: "",
         },
       }),
-      */
       SessionIsCriticalMission_b: 'false',
       TheaterId_s: '',
       TileStates_j: JSON.stringify({
         TileStates: [],
       }),
+      ZoneInstanceId_s: '',
+      ZoneTileIndex_U: '-1',
+      /*
       ["urn:epic:cfg:accepting-members_b"]: "true",
       ["urn:epic:cfg:build-id_s"]: "1:1:",
       ["urn:epic:cfg:chat-enabled_b"]: "true",
@@ -63,8 +64,7 @@ class PartyMeta extends LauncherPartyMeta {
       ["urn:epic:cfg:join-request-action_s"]: "Manual",
       ["urn:epic:cfg:party-type-id_s"]: "default",
       ["urn:epic:cfg:presence-perm_s"]: "Anyone",
-      ZoneInstanceId_s: '',
-      ZoneTileIndex_U: '-1',
+      */
     };
 
     if (meta) this.update(meta, true);
